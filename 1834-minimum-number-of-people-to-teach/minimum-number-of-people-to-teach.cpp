@@ -6,7 +6,7 @@ public:
         for (int i = 0; i < m; i++) {
             for (int l : langs[i]) know[i + 1].insert(l);
         }
-        set<int> need;
+        unordered_set<int> need;
         for (auto& f : friends) {
             int a = f[0], b = f[1];
             bool ok = false;
