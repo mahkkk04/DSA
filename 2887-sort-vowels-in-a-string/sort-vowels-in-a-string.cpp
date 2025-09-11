@@ -1,20 +1,19 @@
 class Solution {
 public:
     string sortVowels(string s) {
-        // Step 1: Collect vowels
-        string vowels;
+        // Step 1: Count vowels using frequency array
+        vector<int> freq(128, 0);  // ASCII size
         for (char c : s) {
-            if (isVowel(c)) vowels.push_back(c);
+            if (isVowel(c)) freq[c]++;
         }
 
-        // Step 2: Sort vowels by ASCII
-        sort(vowels.begin(), vowels.end());
-
-        // Step 3: Replace vowels in order
-        int idx = 0; // pointer for vowels
+        // Step 2: Re-insert vowels in sorted ASCII order
+        int ascii = 0;
         for (char &c : s) {
             if (isVowel(c)) {
-                c = vowels[idx++];
+                while (freq[ascii] == 0) ascii++; // find next vowel
+                c = char(ascii);
+                freq[ascii]--;
             }
         }
 
@@ -23,7 +22,7 @@ public:
 
 private:
     bool isVowel(char c) {
-        return c=='a' || c=='e' || c=='i' || c=='o' || c=='u' ||
-               c=='A' || c=='E' || c=='I' || c=='O' || c=='U';
+        static string v = "aeiouAEIOU";
+        return v.find(c) != string::npos;
     }
 };
