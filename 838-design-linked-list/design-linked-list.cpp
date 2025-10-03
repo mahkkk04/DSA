@@ -22,7 +22,6 @@ public:
     int get(int index) {
         if (index < 0 || index >= size) return -1;
         Node* cur;
-        // Decide direction: start from head or tail
         if (index < size / 2) {
             cur = head->next;
             for (int i = 0; i < index; i++) cur = cur->next;
