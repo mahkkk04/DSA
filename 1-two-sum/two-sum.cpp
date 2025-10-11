@@ -1,18 +1,14 @@
-#include <vector>
-#include <unordered_map>
-using namespace std;
-
 class Solution {
-public:
+    public:
     vector<int> twoSum(vector<int>& nums, int target) {
-        unordered_map<int, int> um;
-        for (int i = 0; i < nums.size(); i++) {
-            int comp = target - nums[i];
-            if (um.count(comp)) {
-                return {um[comp], i};
-            }
-            um[nums[i]] = i;
+    unordered_map<int, int> mp;
+    for (int i = 0; i < nums.size(); i++) {
+        int complement = target - nums[i];
+        if (mp.find(complement) != mp.end()) {
+            return {mp[complement], i};
         }
-        return {}; 
+        mp[nums[i]] = i;
     }
+    return {};
+}
 };
