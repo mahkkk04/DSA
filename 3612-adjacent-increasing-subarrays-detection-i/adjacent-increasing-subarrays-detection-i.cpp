@@ -8,9 +8,20 @@ public:
                 prevInc = inc;
                 inc = 1;
             }
-            maxLen = max(maxLen, max(inc >> 1, min(prevInc, inc)));
+            maxLen = max(maxLen, min(prevInc, inc));
+            maxLen = max(maxLen, inc / 2);
             if (maxLen >= k) return true;
         }
         return false;
     }
 };
+/*
+// if one long increasing subarray can be split into two halves
+int splitCase = inc >> 1;  
+
+// if two consecutive increasing subarrays exist (previous + current)
+int pairCase = min(prevInc, inc);  
+
+//the maximum "valid pair length" found so far
+maxLen = max(maxLen, max(splitCase, pairCase));
+*/
