@@ -8,8 +8,11 @@ public:
                 prevInc = inc;
                 inc = 1;
             }
+                        maxLen = max(maxLen, inc / 2);
+
             maxLen = max(maxLen, min(prevInc, inc));
-            maxLen = max(maxLen, inc / 2);
+
+
             if (maxLen >= k) return true;
         }
         return false;
