@@ -1,74 +1,35 @@
 class Solution {
 public:
     int maxFrequency(vector<int>& nums, int k, int numOperations) {
-        sort(nums.begin(), nums.end());
-        int ans = 0;
-        unordered_map<int, int> numCount;
-        set<int> modes;
+       
+       int maxVal=*max_element(begin(nums),end(nums))+k;
+    
+    vector<int> diff(maxVal+2,0);
+    unordered_map<int,int> freq;
 
-        auto addMode = [&](int value) {
-            modes.insert(value);
-            if (value - k >= nums.front()) {
-                modes.insert(value - k);
-            }
-            if (value + k <= nums.back()) {
-                modes.insert(value + k);
-            }
-        };
+    for(int i=0;i<nums.size();++i){
+        freq[nums[i]]++;
 
-        int lastNumIndex = 0;
-        for (int i = 0; i < nums.size(); ++i) {
-            if (nums[i] != nums[lastNumIndex]) {
-                numCount[nums[lastNumIndex]] = i - lastNumIndex;
-                ans = max(ans, i - lastNumIndex);
-                addMode(nums[lastNumIndex]);
-                lastNumIndex = i;
-            }
-        }
+        int l=max(nums[i]-k,0);
+        int r=min(nums[i]+k,maxVal);
 
-        numCount[nums[lastNumIndex]] = nums.size() - lastNumIndex;
-        ans = max(ans, (int)nums.size() - lastNumIndex);
-        addMode(nums[lastNumIndex]);
+        diff[l]++;
+        diff[r+1]--;
 
-        auto leftBound = [&](int value) {
-            int left = 0, right = nums.size() - 1;
-            while (left < right) {
-                int mid = (left + right) / 2;
-                if (nums[mid] < value) {
-                    left = mid + 1;
-                } else {
-                    right = mid;
-                }
-            }
-            return left;
-        };
+    }
 
-        auto rightBound = [&](int value) {
-            int left = 0, right = nums.size() - 1;
-            while (left < right) {
-                int mid = (left + right + 1) / 2;
-                if (nums[mid] > value) {
-                    right = mid - 1;
-                } else {
-                    left = mid;
-                }
-            }
-            return left;
-        };
+    int result=1;
 
-        for (int mode : modes) {
-            int l = leftBound(mode - k);
-            int r = rightBound(mode + k);
+    for(int target=0;target<=maxVal;target++){
+    diff[target]+= (target>0? diff[target-1]:0);
 
-            int tempAns;
-            if (numCount.count(mode)) {
-                tempAns = min(r - l + 1, numCount[mode] + numOperations);
-            } else {
-                tempAns = min(r - l + 1, numOperations);
-            }
-            ans = max(ans, tempAns);
-        }
+    int targetFreq= freq[target];
+    int needConversion=diff[target]- targetFreq;
 
-        return ans;
+    int maxPossibleFreq=min(needConversion, numOperations);
+    result=max(result,targetFreq+maxPossibleFreq);
+
+    }
+    return result;
     }
 };
