@@ -1,26 +1,22 @@
 class Solution {
 public:
-    void backtrack(vector<int>& nums, vector<bool>& used, vector<int>& path, vector<vector<int>>& res) {
-        if (path.size() == nums.size()) {
-            res.push_back(path);
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<vector<int>> res;
+        generate(nums, 0, res);
+        return res;
+    }
+
+private:
+    void generate(vector<int>& nums, int start, vector<vector<int>>& res) {
+        if (start == nums.size()) {
+            res.push_back(nums);
             return;
         }
 
-        for (int i = 0; i < nums.size(); ++i) {
-            if (used[i]) continue;  // skip already used numbers
-            path.push_back(nums[i]);
-            used[i] = true;
-            backtrack(nums, used, path, res);
-            path.pop_back();
-            used[i] = false;        // backtrack
+        for (int i = start; i < nums.size(); ++i) {
+            swap(nums[start], nums[i]);
+            generate(nums, start + 1, res);
+            swap(nums[start], nums[i]);  // backtrack
         }
-    }
-
-    vector<vector<int>> permute(vector<int>& nums) {
-        vector<vector<int>> res;
-        vector<int> path;
-        vector<bool> used(nums.size(), false);
-        backtrack(nums, used, path, res);
-        return res;
     }
 };
