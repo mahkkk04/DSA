@@ -6,7 +6,7 @@
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
-class Solution {
+/*class Solution {
 public:
     bool hasCycle(ListNode *head) {
         unordered_map<ListNode*,bool>visited;
@@ -20,6 +20,22 @@ public:
         return false;
     }
 };
-
+*/
 //optimized version
 //Floyd’s Cycle Detection (Tortoise & Hare)
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        if(!head||!head->next)return false;
+        ListNode* first=head;
+        ListNode* second=head;
+        while(first!=nullptr&&first->next!=nullptr){
+           first=first->next->next;
+           second=second->next;
+           if(first==second)return true;
+
+        }
+        return false;
+
+    }
+};
