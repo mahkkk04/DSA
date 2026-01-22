@@ -1,35 +1,25 @@
+//two heap technique for problems related to middle element finding
 class MedianFinder {
+private:
+    priority_queue<int> left; // max heap
+    priority_queue<int, vector<int>, greater<int>> right; // min heap
 public:
-    priority_queue<int> leftHeap;
-    priority_queue<int, vector<int>, greater<int>> rightHeap;
-    
     MedianFinder() {}
-    
     void addNum(int num) {
-        if(leftHeap.empty() || num <= leftHeap.top()) leftHeap.push(num);
-        else rightHeap.push(num);
-        
-        if(leftHeap.size() > rightHeap.size() + 1) {
-            rightHeap.push(leftHeap.top());
-            leftHeap.pop();
-        } 
-        else if(rightHeap.size() > leftHeap.size()) {
-            leftHeap.push(rightHeap.top());
-            rightHeap.pop();
+        left.push(num);
+        right.push(left.top());
+        left.pop();
+        if (right.size() > left.size()) {
+            left.push(right.top());
+            right.pop();
         }
     }
-    
     double findMedian() {
-        if(leftHeap.size() == rightHeap.size()) 
-            return (leftHeap.top() + rightHeap.top()) / 2.0;
-        return leftHeap.top();
+        if (left.size() > right.size()) {
+            return left.top();
+        } else {
+            return (left.top() + right.top()) / 2.0;
+        }
     }
 };
 
-
-/**
- * Your MedianFinder object will be instantiated and called as such:
- * MedianFinder* obj = new MedianFinder();
- * obj->addNum(num);
- * double param_2 = obj->findMedian();
- */
