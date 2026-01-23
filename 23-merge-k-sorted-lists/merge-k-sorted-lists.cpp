@@ -13,7 +13,7 @@ priority_queue<ListNode*, vector<ListNode*>,function<bool(ListNode*, ListNode*)>
             }
         }
 
-        ListNode* dummy = new ListNode(0);
+        ListNode* dummy = new ListNode(1);
         ListNode* tail = dummy;
 
         // Process heap
