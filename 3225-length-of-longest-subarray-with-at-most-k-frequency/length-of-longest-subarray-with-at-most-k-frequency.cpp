@@ -3,7 +3,7 @@ public:
     int maxSubarrayLength(vector<int>& nums, int k) {
         const int n=nums.size();
         int cnt=0;
-        unordered_map<int, int> freq;//1 <= nums[i] <= 10^9
+        unordered_map<int, int> freq;
         freq.reserve(n);
         for (int l=0, r=0; r<n; r++){
             int x=nums[r];
@@ -12,7 +12,7 @@ public:
             while (f>k)
                 freq[nums[l++]]--;
         
-            cnt=max(cnt,r-l+1);// max len
+            cnt=max(cnt,r-l+1);
         }
         return cnt;
     }
