@@ -12,6 +12,7 @@ public:
         vector<State> prev(n + 1, {0, {}});  // k = 0: nothing picked
         for (int k = 0; k < 4; ++k) {
             vector<State> cur(n + 1, {0, {}});
+            
             for (int p = 1; p <= n; ++p) {
                 int i = order[p - 1];  // take next interval
                 int l = intervals[i][0], w = intervals[i][2];
