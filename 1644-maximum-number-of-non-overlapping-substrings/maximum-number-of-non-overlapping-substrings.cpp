@@ -36,6 +36,7 @@ public:
                 left = min(left, item[0]);
                 right = max(right, item[1]);
 
+
                 if (total == right - left + 1) {
                     break;
                 }
