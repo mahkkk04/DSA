@@ -8,10 +8,8 @@ public:
                 depth--;
                 continue;
             }
-            // Digits and operators
             if (c != '(') continue;
             depth++;
-            // New max only possible after '('
             if (depth > r) r = depth;
         }
         return r;
